@@ -1,0 +1,10 @@
+{
+  "title": "LD42 - No Disk Space",
+  "originalsize": "14MB",
+  "repacksize": "10MB",
+  "host": "https://drive.google.com/uc?export=download&id=1Qc9xHReOZ7YgxiyrF5HU2wh4oSQrNwoN", 
+  "archivename": "nodiskspace.arc",
+  "setup": "unpack",
+  "executable": "LD42.exe",
+  "comment": "https://rayriver.itch.io/ld42 < - creator of this game"
+}
