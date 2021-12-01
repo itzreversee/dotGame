@@ -5,8 +5,8 @@ import time, os
 import requests
 import json
 
-appversion = "v1.1b"
-appstable = "unstable"
+appversion = "v1"
+appstable = "stable"
 
 def download(host, filename):
     if (not os.path.isfile(filename)): 
