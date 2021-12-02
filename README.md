@@ -1,4 +1,4 @@
-# dotGame  
+# dotGame CLI ( dotDownload )
 dotGame is a Quick and Easy, Game Manager, Downloader and Installer. Written in Python (CLI) and C# (GUI)  
 
 ##### NOTE: THIS ISN'T MEANT FOR CRACKING AND OTHER ILLEGAL STUFF!!!!  
