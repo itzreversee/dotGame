@@ -3,7 +3,7 @@ dotGame is a Quick and Easy, Game Manager, Downloader and Installer. Written in 
 
 ##### NOTE: THIS ISN'T MEANT FOR CRACKING AND OTHER ILLEGAL STUFF!!!!  
 
-In releases folder, you can find sample [game meta](https://rayriver.itch.io/ld42) 
+In releases, you can find sample [game meta](https://rayriver.itch.io/ld42) 
 
 ## Quick Launch
  * Get newest Release
