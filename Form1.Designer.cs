@@ -47,8 +47,8 @@
             this.downloadBtn = new System.Windows.Forms.Button();
             this.installBtn = new System.Windows.Forms.Button();
             this.dropMeta = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.label4 = new System.Windows.Forms.Label();
             this.gpanel.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -267,9 +267,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(12, 430);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(81, 13);
+            this.label4.Size = new System.Drawing.Size(210, 13);
             this.label4.TabIndex = 13;
-            this.label4.Text = "icons by Icons8";
+            this.label4.Text = "https://github.com/reversee-dev/dotGame";
             // 
             // Form1
             // 
@@ -280,9 +280,11 @@
             this.Controls.Add(this.dropMeta);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.gpanel);
+            this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(816, 489);
             this.MinimumSize = new System.Drawing.Size(816, 489);
             this.Name = "Form1";
+            this.ShowIcon = false;
             this.Text = "dotInstaller";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.gpanel.ResumeLayout(false);
@@ -314,8 +316,8 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label lstatus;
         public System.Windows.Forms.Label dropMeta;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.Label label4;
     }
 }
 
