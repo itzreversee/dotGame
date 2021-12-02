@@ -13,6 +13,7 @@ def install(stype, filename, gname, gexec):
             os.makedirs(outpath)
         unpack(filename, outpath)
         postInstall(gname, gexec, outpath)
+        time.sleep(3)
 
     if (stype) == 'dotSetup': print("not implemented")
 

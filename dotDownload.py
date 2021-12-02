@@ -1,7 +1,7 @@
 from pynput import keyboard
 from dotSetup import install
 from clint.textui import progress
-import time, os
+import time, os, sys
 import requests
 import json
 
@@ -24,7 +24,7 @@ def download(host, filename):
         with keyboard.Events() as events:
             event = events.get(1e6)
             if (event.key) == keyboard.KeyCode.from_char('y'): os.remove(filename); download(host, filename); 
-            else: exit()
+            else: sys.exit()
 
 print(" dotDownload | " + appversion + " | " + appstable + " | " )
 metadataFile = input("Drag and drop metadata file here: "); f = open(metadataFile)
@@ -47,7 +47,7 @@ with keyboard.Events() as events:
     event = events.get(1e6)
     if (event.key) == keyboard.KeyCode.from_char('d'): download(metadataParsed["host"], metadataParsed["archivename"]); 
     if (event.key) == keyboard.KeyCode.from_char('i'): install(metadataParsed["setup"], metadataParsed["archivename"], metadataParsed["title"], metadataParsed["executable"]); 
-    else: exit()
+    else: sys.exit()
 
 
 
