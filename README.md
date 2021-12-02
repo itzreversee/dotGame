@@ -14,7 +14,7 @@ In releases folder, you can find sample [game meta](https://rayriver.itch.io/ld4
  * Installer will create shortcut on your desktop, enjoy!
  
 ## Build
-_Note: This was built on **Windows 11**, using **Visual Studio 2022** and **.NET Framework 4.8**
+_Note: This was built on **Windows 11**, using **Visual Studio 2022** and **.NET Framework 4.8**_
  * Clone repo
  * Open with Visual Studio
  * Install ```Newtonsoft.Json``` from NuGet if needed
