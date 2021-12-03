@@ -53,6 +53,11 @@ namespace dotManager
             {
                 installBtn.Enabled = true;
             }
+            if (gameinfo.host == "offline")
+            {
+                downloadBtn.Enabled = false;
+                gameinfo.title = gameinfo.title + " | Offline | ";
+            } 
 
             typeGameInfo(gameinfo);
         }
@@ -62,6 +67,7 @@ namespace dotManager
             public String ghost = null;
         public String gname = null;
         public String gexec = null;
+        public String gtype = null;
 
         public void typeGameInfo(metadata gameinfo)
         {
@@ -69,6 +75,7 @@ namespace dotManager
             gname = gameinfo.title;
             ghost = gameinfo.host;
             gexec = gameinfo.executable;
+            gtype = gameinfo.setup;
             gtitle.Text = gameinfo.title;
             originalsize.Text = gameinfo.originalsize;
             repacksize.Text = gameinfo.repacksize;
@@ -124,11 +131,12 @@ namespace dotManager
         public async void prepareWorkDir()
         {
             System.IO.Directory.CreateDirectory(appfolder);
+            System.IO.Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\dotTemp\\");
             if (!System.IO.File.Exists(appfolder + "linker.bat"))
             {
                 string[] linkerCode =
                 {
-                    "set lnn=%1", "set ldd=%2", "set lnn=%lnn:\"=%", "set ldd=%ldd:\"=%", "mklink \"%userprofile%\\Desktop\\%lnn%\" \"%ldd%\""
+                    "set lnn=%1", "set ldd=%2", "set lnn=%lnn:\"=%", "set ldd=%ldd:\"=%", "mklink /H \"%userprofile%\\Desktop\\%lnn%\" \"%ldd%\""
                 };
                 File.WriteAllLines(appfolder + "linker.bat", linkerCode);
             }
@@ -188,7 +196,7 @@ namespace dotManager
         }
 
         private void downloadBtn_Click(object sender, EventArgs e)
-        {
+        { 
             downloadArchive(garc, ghost);
             this.AllowDrop = false;
             installBtn.Enabled = true;
@@ -199,29 +207,87 @@ namespace dotManager
             this.AllowDrop = false;
             gpanel.Hide();
             dropMeta.Visible = true;
-            dropMeta.Text = "Select Installation Path";
-            
-            DialogResult result = folderBrowserDialog1.ShowDialog();
-            if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(folderBrowserDialog1.SelectedPath))
+
+            if (gtype == "unpack") {
+                dropMeta.Text = "Select Installation Path";
+                DialogResult result = folderBrowserDialog1.ShowDialog();
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(folderBrowserDialog1.SelectedPath))
+                {
+                    dropMeta.Text = "Installing to: \n" + folderBrowserDialog1.SelectedPath;
+
+                    var inst = Process.Start(appfolder + "arc.exe", "x -o+ " + appfolder + garc + " --yes --display --diskpath\"" + folderBrowserDialog1.SelectedPath + "\"");
+                    inst.WaitForExit();
+
+                    dropMeta.Text = "Creating Desktop Shortcut...";
+
+                    var link = Process.Start(appfolder + "linker.bat", "\"" + gname + "\" " + "\"" + folderBrowserDialog1.SelectedPath + @"\" + gexec + "\"");
+                    Thread.Sleep(1);
+                    dropMeta.Text = gname + "\nInstalled successfully!";
+                    Thread.Sleep(3);
+
+                }
+            } else if (gtype == "external")
             {
-                dropMeta.Text = "Installing to: \n" +folderBrowserDialog1.SelectedPath;
+                if (System.IO.Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\dotTemp\\"))
+                {
+                    System.IO.Directory.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\dotTemp\\", true);
+                    System.IO.Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\dotTemp\\");
+                } 
+                
+                dropMeta.Text = "Decompressing external installer";
 
-                var inst = Process.Start(appfolder + "arc.exe", "x -o+ "+appfolder+garc+" --yes --display --diskpath\"" + folderBrowserDialog1.SelectedPath +"\"");
-                inst.WaitForExit();
+                string tempcode =
+                (
+                    appfolder + "arc.exe x -o+ " + appfolder + garc + " --yes --display --diskpath" + Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\dotTemp\\"
+                );
+                File.Delete(appfolder + garc + "_decompress.bat");
+                File.WriteAllText(appfolder + garc + "_decompress.bat", tempcode);
 
-                dropMeta.Text = "Creating Desktop Shortcut...";
 
-                var link = Process.Start(appfolder + "linker.bat", "\"" +gname + "\" " + "\"" +folderBrowserDialog1.SelectedPath + @"\" + gexec+"\"");
-                Thread.Sleep(1);     
-                dropMeta.Text = gname + "\nInstalled successfully!";
-                Thread.Sleep(3);
+                Process unpack = new Process();
+                ProcessStartInfo info = unpack.StartInfo;
+                info.FileName = "powershell.exe";
+                info.Arguments = appfolder + garc + "_decompress.bat";
+                info.Verb = "runas";
+                unpack.StartInfo = info;
+                unpack.Start();
+                unpack.WaitForExit();
+
+                dropMeta.Text = "Starting external installer";
+
+                var setupProcess = Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\dotTemp\\" + gexec);
+                setupProcess.WaitForExit();
+
+                dropMeta.Text = "Deleting external installer";
+                System.IO.Directory.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\dotTemp\\", true);
 
             }
+            
             dropMeta.Visible = false;
             gpanel.Show();
+            this.AllowDrop = true;
 
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Do you really want to delete all data and restart? \n( this doesn't uninstall your games, only archives )", "dotGame | Wipe Data", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                gpanel.Hide();
+                dropMeta.Visible = true;
+                dropMeta.Text = "Clearing data...\nApp will restart soon...";
+                Thread.Sleep(1);
+                System.IO.Directory.Delete(appfolder, true);
+                Thread.Sleep(1);
+                Application.Restart();
+            }
+            else
+            {
+                return;
+            }
+        }
     }
+    
 }
 

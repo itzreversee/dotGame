@@ -49,6 +49,7 @@
             this.dropMeta = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.label4 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.gpanel.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -209,6 +210,7 @@
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.Control;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.quitbtn);
             this.panel2.Controls.Add(this.downloadBtn);
             this.panel2.Controls.Add(this.installBtn);
@@ -271,6 +273,18 @@
             this.label4.TabIndex = 13;
             this.label4.Text = "https://github.com/reversee-dev/dotGame";
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.button1.Enabled = false;
+            this.button1.Location = new System.Drawing.Point(20, 74);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Wipe Data";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -318,6 +332,7 @@
         public System.Windows.Forms.Label dropMeta;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button1;
     }
 }
 
