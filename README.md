@@ -24,4 +24,5 @@ Note: This was built on Windows 11, using Visual Studio 2022 and .NET Framework 
  * Archive your game files using FreeArc so that all game files are in the root of archive
  * Upload it somewhere and get direct link.
  * Download template game meta file and fill it out.
- * Create Issue with meta file included
+ * Create Issue with meta file include
+ * Publish it somewhere
